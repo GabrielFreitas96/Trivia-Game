@@ -8,6 +8,6 @@ export default class Header extends Component {
       <header className="App-header">
         <img src={ logo } className="App-logo" alt="logo" />
       </header>
-    )
+    );
   }
 }

@@ -9,24 +9,23 @@ export const getToken = async () => {
   return response;
 };
 
-export const getQuestions = async ({response_code, token}) => {
-  if (response_code === 0) {
-    const urlRequest = `https://opentdb.com/api.php?amount=5&token=${token}`
-    const data = await fetch(urlRequest);
-    const response = await data.json();
-    return response;
-  } else if (response_code === 3) {
-    const {token} = await getToken();
-    const urlRequest = `https://opentdb.com/api.php?amount=5&token=${token}`
+export const getQuestions = async ({ response_code: resposeCode, token }) => {
+  if (resposeCode === 0) {
+    const urlRequest = `https://opentdb.com/api.php?amount=5&token=${token}`;
     const data = await fetch(urlRequest);
     const response = await data.json();
     return response;
   }
+  const { token: tokenTwo } = await getToken();
+  const urlRequest = `https://opentdb.com/api.php?amount=5&token=${tokenTwo}`;
+  const data = await fetch(urlRequest);
+  const response = await data.json();
+  return response;
 };
 
 export const getGravatar = async (email) => {
   const hash = md5(email).toString();
-  const gravatarURL = `https://www.gravatar.com/avatar/${hash}`
+  const gravatarURL = `https://www.gravatar.com/avatar/${hash}`;
   const data = await fetch(gravatarURL);
   return data.url;
-}
+};

@@ -50,13 +50,14 @@ class Login extends React.Component {
             value={ email }
             name="email"
             type="email"
-            placeholder="Email" data-testid="input-gravatar-email"
+            placeholder="Email"
+            data-testid="input-gravatar-email"
             onChange={ (event) => this.handleChange(event) }
           />
           <button disabled={ disabled } type="submit" data-testid="btn-play">Play</button>
         </form>
       </>
-    )
+    );
   }
 }
 

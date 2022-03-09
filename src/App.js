@@ -5,10 +5,10 @@ import Login from './pages/Login';
 
 export default class App extends React.Component {
   render() {
-  return (
-    <div className="App">
-      <Route path="/" component={ Login }/>
-    </div>
-  );
+    return (
+      <div className="App">
+        <Route path="/" component={ Login } />
+      </div>
+    );
   }
 }
