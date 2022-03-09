@@ -1,7 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import logo from '../trivia.png';
 import '../App.css';
+import PlayerAction from '../Redux/Actions';
 
 class Login extends React.Component {
   state = {
@@ -32,6 +34,12 @@ class Login extends React.Component {
     }, () => this.enableButton());
   }
 
+  handleClick = () => {
+    const { dispatch } = this.props;
+    const { name, email } = this.state;
+    dispatch(PlayerAction({ name, email }));
+  }
+
   render() {
     const { disabled, email, name } = this.state;
     return (
@@ -54,11 +62,22 @@ class Login extends React.Component {
             data-testid="input-gravatar-email"
             onChange={ (event) => this.handleChange(event) }
           />
-          <button disabled={ disabled } type="submit" data-testid="btn-play">Play</button>
+          <button
+            onClick={ this.handleClick }
+            disabled={ disabled }
+            type="button"
+            data-testid="btn-play"
+          >
+            Play
+          </button>
         </form>
       </>
     );
   }
 }
+
+Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
 
 export default connect()(Login);

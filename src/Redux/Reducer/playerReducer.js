@@ -13,7 +13,7 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       name: action.payload.name,
-      gravatarEmail: action.payload.gravatarEmail,
+      gravatarEmail: action.payload.email,
     };
   default:
     return state;
