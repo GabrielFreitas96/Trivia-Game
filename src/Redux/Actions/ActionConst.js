@@ -1,0 +1,1 @@
+const PLAYER_INFO = 'PLAYER_INFO';
