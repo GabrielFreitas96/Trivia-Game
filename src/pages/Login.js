@@ -14,7 +14,7 @@ class Login extends React.Component {
     disabled: true,
   }
 
-  enableButton = () => {
+  enableButton = async () => {
     const minLengthName = 4;
     const { email, name } = this.state;
     const emailVerify = email.includes('@') && email.includes('.com');
