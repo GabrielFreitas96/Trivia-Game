@@ -1,6 +1,10 @@
 import React from 'react';
+<<<<<<< HEAD
 import { connect } from 'react-redux';
 import { getQuestions } from '../Service/service';
+=======
+import Header from '../components/Header';
+>>>>>>> af061916a7f3434e23c6da176d863204c1ff7d4d
 
 class Game extends React.Component {
   async componentDidMount() {
@@ -13,7 +17,7 @@ class Game extends React.Component {
   render() {
     return (
       <section>
-        <h1>Tela do Jogo</h1>
+        <Header />
       </section>);
   }
 }

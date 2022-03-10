@@ -5,6 +5,7 @@ const INITIAL_STATE = {
   assertions: '',
   score: '',
   gravatarEmail: '',
+  gravatarURL: '',
 };
 
 const playerReducer = (state = INITIAL_STATE, action) => {
@@ -14,6 +15,7 @@ const playerReducer = (state = INITIAL_STATE, action) => {
       ...state,
       name: action.payload.name,
       gravatarEmail: action.payload.email,
+      gravatarURL: action.payload.gravatarURL,
     };
   default:
     return state;

@@ -1,4 +1,5 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import logo from '../trivia.png';
@@ -13,7 +14,7 @@ class Login extends React.Component {
     disabled: true,
   }
 
-  enableButton = () => {
+  enableButton = async () => {
     const minLengthName = 4;
     const { email, name } = this.state;
     const emailVerify = email.includes('@') && email.includes('.com');
@@ -76,6 +77,11 @@ class Login extends React.Component {
           >
             Play
           </button>
+          <Link
+            to="/settings"
+          >
+            <button data-testid="btn-settings" type="button">Settings</button>
+          </Link>
         </form>
       </>
     );
