@@ -1,7 +1,12 @@
 const INITIAL_STATE = {
-  token:'',
-}
+  token: '',
+};
 
-const tokenReducer = (state= INITIAL_STATE, action) => state;
+const tokenReducer = (state = INITIAL_STATE, action) => {
+  switch (action.type) {
+  default:
+    return state;
+  }
+};
 
 export default tokenReducer;

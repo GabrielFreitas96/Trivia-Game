@@ -1,0 +1,83 @@
+import React from 'react';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
+import logo from '../trivia.png';
+import '../App.css';
+import PlayerAction from '../Redux/Actions';
+
+class Login extends React.Component {
+  state = {
+    name: '',
+    email: '',
+    disabled: true,
+  }
+
+  enableButton = () => {
+    const minLengthName = 4;
+    const { email, name } = this.state;
+    const emailVerify = email.includes('@') && email.includes('.com');
+    if (emailVerify && name.length >= minLengthName) {
+      this.setState({
+        disabled: false,
+      });
+    } else {
+      this.setState({
+        disabled: true,
+      });
+    }
+  }
+
+  handleChange = ({ target }) => {
+    const { name, value } = target;
+    this.setState({
+      [name]: value,
+    }, () => this.enableButton());
+  }
+
+  handleClick = () => {
+    const { dispatch } = this.props;
+    const { name, email } = this.state;
+    dispatch(PlayerAction({ name, email }));
+  }
+
+  render() {
+    const { disabled, email, name } = this.state;
+    return (
+      <>
+        <img src={ logo } className="App-logo" alt="logo" />
+        <form>
+          <input
+            value={ name }
+            name="name"
+            type="text"
+            placeholder="Nome"
+            data-testid="input-player-name"
+            onChange={ (event) => this.handleChange(event) }
+          />
+          <input
+            value={ email }
+            name="email"
+            type="email"
+            placeholder="Email"
+            data-testid="input-gravatar-email"
+            onChange={ (event) => this.handleChange(event) }
+          />
+          <button
+            onClick={ this.handleClick }
+            disabled={ disabled }
+            type="button"
+            data-testid="btn-play"
+          >
+            Play
+          </button>
+        </form>
+      </>
+    );
+  }
+}
+
+Login.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+export default connect()(Login);
