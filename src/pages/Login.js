@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import logo from '../trivia.png';
 import '../App.css';
-import PlayerAction from '../Redux/Actions';
+import { PlayerAction, TokenAction } from '../Redux/Actions';
+import { getToken, saveTokenLocalStorage } from '../Service/service';
 
 class Login extends React.Component {
   state = {
@@ -34,10 +35,15 @@ class Login extends React.Component {
     }, () => this.enableButton());
   }
 
-  handleClick = () => {
-    const { dispatch } = this.props;
+  handleClick = async () => {
+    const tokenApi = await getToken();
+    console.log(tokenApi);
+    const { dispatch, history } = this.props;
     const { name, email } = this.state;
     dispatch(PlayerAction({ name, email }));
+    dispatch(TokenAction(tokenApi));
+    saveTokenLocalStorage(tokenApi);
+    history.push('/game');
   }
 
   render() {
@@ -81,3 +87,8 @@ Login.propTypes = {
 };
 
 export default connect()(Login);
+Login.propTypes = {
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
+};
