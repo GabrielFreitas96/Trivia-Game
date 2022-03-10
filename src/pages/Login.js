@@ -4,16 +4,18 @@ import PropTypes from 'prop-types';
 import logo from '../trivia.png';
 import '../App.css';
 import { PlayerAction, TokenAction } from '../Redux/Actions';
-import { getToken, saveTokenLocalStorage } from '../Service/service';
+import { getToken, saveTokenLocalStorage, getGravatar } from '../Service/service';
+
 
 class Login extends React.Component {
   state = {
     name: '',
     email: '',
     disabled: true,
+    gravatarURL: '',
   }
 
-  enableButton = () => {
+  enableButton = async () => {
     const minLengthName = 4;
     const { email, name } = this.state;
     const emailVerify = email.includes('@') && email.includes('.com');
@@ -21,6 +23,8 @@ class Login extends React.Component {
       this.setState({
         disabled: false,
       });
+      const result = await getGravatar(email);
+      this.setState({ gravatarURL: result })
     } else {
       this.setState({
         disabled: true,
@@ -39,8 +43,8 @@ class Login extends React.Component {
     const tokenApi = await getToken();
     console.log(tokenApi);
     const { dispatch, history } = this.props;
-    const { name, email } = this.state;
-    dispatch(PlayerAction({ name, email }));
+    const { name, email, gravatarURL } = this.state;
+    dispatch(PlayerAction({ name, email, gravatarURL }));
     dispatch(TokenAction(tokenApi));
     saveTokenLocalStorage(tokenApi);
     history.push('/game');

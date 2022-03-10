@@ -1,4 +1,5 @@
 const { MD5 } = require('crypto-js');
+const md5 = require('crypto-js/md5');
 const { fetch: fetchMock, expiredTokenFetch } = require('../mocks/fetch');
 const { questionsResponse } = require('../mocks/questions');
 
@@ -36,6 +37,7 @@ describe('4 - [TELA DE JOGO] Crie um _header_ que deve conter as informações d
   });
 
   it('Será validado se a imagem do Gravatar está presente no header', () => {
+    console.log(MD5(PLAYER_EMAIL))
     cy.get(HEADER_IMAGE_SELECTOR).should('exist');
     cy.get(HEADER_IMAGE_SELECTOR).should('have.attr', 'src', `https://www.gravatar.com/avatar/${MD5(PLAYER_EMAIL)}`);
   });
