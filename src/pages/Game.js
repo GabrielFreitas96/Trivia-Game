@@ -1,10 +1,8 @@
 import React from 'react';
-<<<<<<< HEAD
 import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 import { getQuestions } from '../Service/service';
-=======
 import Header from '../components/Header';
->>>>>>> af061916a7f3434e23c6da176d863204c1ff7d4d
 
 class Game extends React.Component {
   async componentDidMount() {
@@ -27,3 +25,6 @@ const mapStateToProps = (globalState) => ({
 });
 
 export default connect(mapStateToProps)(Game);
+Game.propTypes = {
+  token: PropTypes.string.isRequired,
+};
