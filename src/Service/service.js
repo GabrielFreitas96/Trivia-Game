@@ -6,7 +6,7 @@ const tokenURL = 'https://opentdb.com/api_token.php?command=request';
 export const getToken = async () => {
   const data = await fetch(tokenURL);
   const response = await data.json();
-  return response;
+  return response.token;
 };
 
 export const getQuestions = async ({ response_code: resposeCode, token }) => {
@@ -28,4 +28,8 @@ export const getGravatar = async (email) => {
   const gravatarURL = `https://www.gravatar.com/avatar/${hash}`;
   const data = await fetch(gravatarURL);
   return data.url;
+};
+
+export const saveTokenLocalStorage = (token) => {
+  localStorage.setItem('token', JSON.stringify(token));
 };

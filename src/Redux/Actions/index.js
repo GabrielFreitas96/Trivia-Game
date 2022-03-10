@@ -1,10 +1,13 @@
-import { PLAYER_INFO } from './ActionConst';
+import { PLAYER_INFO, TOKEN_INFO } from './ActionConst';
 
-const PlayerAction = (playerObject) => ({
+export const PlayerAction = (playerObject) => ({
   type: PLAYER_INFO,
   payload: {
     ...playerObject,
   },
 });
 
-export default PlayerAction;
+export const TokenAction = (tokenString) => ({
+  type: TOKEN_INFO,
+  payload: `${tokenString}`,
+});
