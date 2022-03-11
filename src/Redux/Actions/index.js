@@ -1,4 +1,4 @@
-import { PLAYER_INFO, TOKEN_INFO } from './ActionConst';
+import { PLAYER_INFO, TOKEN_INFO, TIMER, ADD_SCORE } from './ActionConst';
 
 export const PlayerAction = (playerObject) => ({
   type: PLAYER_INFO,
@@ -10,4 +10,16 @@ export const PlayerAction = (playerObject) => ({
 export const TokenAction = (tokenString) => ({
   type: TOKEN_INFO,
   payload: `${tokenString}`,
+});
+
+export const TimerAction = (number) => ({
+  type: TIMER,
+  payload: number,
+});
+
+export const ScoreAction = (score) => ({
+  type: ADD_SCORE,
+  payload: {
+    score,
+  },
 });

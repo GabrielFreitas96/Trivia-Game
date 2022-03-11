@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import logo from '../trivia.png';
 import '../App.css';
 import { PlayerAction, TokenAction } from '../Redux/Actions';
-import { getToken, saveTokenLocalStorage } from '../Service/service';
+import { getToken, saveLocalStorage } from '../Service/service';
 
 class Login extends React.Component {
   state = {
@@ -43,7 +43,7 @@ class Login extends React.Component {
     const { name, email } = this.state;
     dispatch(PlayerAction({ name, email }));
     dispatch(TokenAction(tokenApi));
-    saveTokenLocalStorage(tokenApi);
+    saveLocalStorage('token', tokenApi);
     history.push('/game');
   }
 
