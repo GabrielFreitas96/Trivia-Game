@@ -30,6 +30,6 @@ export const getGravatar = async (email) => {
   return data.url;
 };
 
-export const saveTokenLocalStorage = (token) => {
-  localStorage.setItem('token', JSON.stringify(token));
+export const saveLocalStorage = (propriedade, string) => {
+  localStorage.setItem(propriedade, JSON.stringify(string));
 };
