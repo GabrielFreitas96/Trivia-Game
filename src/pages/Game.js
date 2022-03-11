@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { getQuestions } from '../Service/service';
 import Header from '../components/Header';
+import './Game.css';
 
 class Game extends React.Component {
   state = {
@@ -45,8 +46,9 @@ class Game extends React.Component {
         return (
           <button
             type="button"
+            className="respostaCorreta"
             data-testid="correct-answer"
-            onClick={ () => { this.clickAnswer(element); } }
+            onClick={ (event) => { this.clickAnswer(element, event); } }
           >
             {element}
           </button>);
@@ -58,8 +60,9 @@ class Game extends React.Component {
       return (
         <button
           type="button"
+          className="incorrectAnswer"
           data-testid={ `wrong-answer-${counterIndex}` }
-          onClick={ () => { this.clickAnswer(element); } }
+          onClick={ (event) => { this.clickAnswer(element, event); } }
           key={ counterIndex }
         >
           {element}
@@ -67,10 +70,25 @@ class Game extends React.Component {
     });
   };
 
-  clickAnswer = (answer) => {
-    console.log('Clicado');
-    console.log('Clicou na Answer', answer);
+  clickAnswer = (answer, event) => {
+    const { correctAnswer } = this.state;
+    const answerClick = event.target;
+    const answers = document.querySelectorAll('.incorrectAnswer');
+    const respostaCorreta = document.querySelector('.respostaCorreta');
+
+    if (answer === correctAnswer) {
+      answerClick.classList.add('correct');
+      answers.forEach((resposta) => {
+        resposta.classList.add('incorrect');
+      });
+    } else {
+      respostaCorreta.classList.add('correct');
+      answers.forEach((resposta) => {
+        resposta.classList.add('incorrect');
+      });
+    }
   };
+  ;
 
   clickNextQuestion = () => {
     console.log('Clicou Next Question');
