@@ -9,17 +9,17 @@ export const getToken = async () => {
   return response.token;
 };
 
-export const getQuestions = async ({ response_code: resposeCode, token }) => {
-  if (resposeCode === 0) {
-    const urlRequest = `https://opentdb.com/api.php?amount=5&token=${token}`;
-    const data = await fetch(urlRequest);
-    const response = await data.json();
-    return response;
-  }
-  const { token: tokenTwo } = await getToken();
-  const urlRequest = `https://opentdb.com/api.php?amount=5&token=${tokenTwo}`;
+export const getQuestions = async (token) => {
+  const urlRequest = `https://opentdb.com/api.php?amount=5&token=${token}`;
   const data = await fetch(urlRequest);
   const response = await data.json();
+  if (response.results.length === 0) {
+    const tokenTwo = await getToken();
+    const urlRequestTwo = `https://opentdb.com/api.php?amount=5&token=${tokenTwo}`;
+    const dataTwo = await fetch(urlRequestTwo);
+    const responseTwo = await dataTwo.json();
+    return responseTwo;
+  }
   return response;
 };
 
