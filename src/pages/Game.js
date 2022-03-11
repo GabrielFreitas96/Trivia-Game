@@ -16,26 +16,6 @@ class Game extends React.Component {
     const { token } = this.props;
     console.log(token);
     const ApiResult = await getQuestions(token);
-    console.log(ApiResult);
-    /* ApiResult.results.forEach((element, index, array2) => {
-      const index2 = Math.floor(Math.random() * (array2.length - 1));
-      array[index] = (array2[index2]);
-    }); */
-    /* const number = 0.5; */
-    // const array = [...ApiResult.results];
-    // array
-    // .sort(function compare(a, b) {
-    //   if (a.difficulty.length < b.difficulty.length) {
-    //     return -1;
-    //   }
-    //   if (a.difficulty.length > b.difficulty.length) {
-    //     return 1;
-    //   }
-    //   if (a.difficulty.length === b.difficulty.length) {
-    //     return 0;
-    //   }
-    // });
-    // console.log('Result Questions', array);
     const { counter } = this.state;
     this.setState({
       resultsQuestions: ApiResult.results,
@@ -56,20 +36,12 @@ class Game extends React.Component {
 
   createQuestions = (arrayAllQuestions, correctAnswer) => {
     const randomQuestions = this.arrayRandomOrder(arrayAllQuestions);
-    console.log('random Questions', randomQuestions);
+    // console.log('random Questions', randomQuestions);
     let counterIndex = 0 - 1;
     return randomQuestions.map((element) => {
       if (element === correctAnswer) {
-        console.log('Entrou no IF');
-        console.log(element);
-        // const retorno = (
-        //   <button
-        //     type="button"
-        //     data-testid="correct-answer"
-        //     onClick={ () => {} }
-        //   >
-        //     {element}
-        //   </button>);
+        // console.log('Entrou no IF');
+        // console.log(element);
         return (
           <button
             type="button"
@@ -80,9 +52,9 @@ class Game extends React.Component {
           </button>);
       }
       counterIndex += 1;
-      console.log(counterIndex);
-      console.log('Não entrou no if');
-      console.log(element);
+      // console.log(counterIndex);
+      // console.log('Não entrou no if');
+      // console.log(element);
       return (
         <button
           type="button"
