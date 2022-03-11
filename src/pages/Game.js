@@ -13,6 +13,8 @@ class Game extends React.Component {
     counter: 0,
     allQuestions: [],
     correctAnswer: '',
+    isDisabled: true,
+    isHidden: true,
     difficulty: '',
     disabledBtnQuestions: false,
   }
@@ -50,14 +52,10 @@ class Game extends React.Component {
   };
 
   createQuestions = (arrayAllQuestions, correctAnswer) => {
-    // const randomQuestions = this.arrayRandomOrder(arrayAllQuestions);
-    // console.log('random Questions', randomQuestions);
     let counterIndex = 0 - 1;
     const { disabledBtnQuestions } = this.state;
     return arrayAllQuestions.map((element) => {
       if (element === correctAnswer) {
-        // console.log('Entrou no IF');
-        // console.log(element);
         return (
           <button
             type="button"
@@ -70,9 +68,7 @@ class Game extends React.Component {
           </button>);
       }
       counterIndex += 1;
-      // console.log(counterIndex);
-      // console.log('Não entrou no if');
-      // console.log(element);
+
       return (
         <button
           type="button"
@@ -87,11 +83,20 @@ class Game extends React.Component {
     });
   };
 
+  refreshButton = () => {
+    this.setState({
+      isDisabled: false,
+      isHidden: false,
+    });
+  }
+
   clickAnswer = (answer, event) => {
     const { correctAnswer, difficulty } = this.state;
     const answerClick = event.target;
     const answers = document.querySelectorAll('.incorrectAnswer');
     const respostaCorreta = document.querySelector('.respostaCorreta');
+    console.log(respostaCorreta);
+
     let score = 0;
     const { timer, dispatch } = this.props;
     if (answer === correctAnswer) {
@@ -114,13 +119,14 @@ class Game extends React.Component {
       score = scoreNumber + (timer * difficultPoints);
       dispatch(ScoreAction(score));
     } else {
+      console.log('oi:', respostaCorreta);
       respostaCorreta.classList.add('correct');
       answers.forEach((resposta) => {
         resposta.classList.add('incorrect');
       });
     }
+    this.refreshButton();
   };
-  ;
 
   updateQuestions = () => {
     const { resultsQuestions, counter } = this.state;
@@ -132,6 +138,19 @@ class Game extends React.Component {
   }
 
   clickNextQuestion = () => {
+    this.setState((prevState) => ({
+      counter: prevState.counter + 1,
+      isDisabled: true,
+    }
+    ));
+
+    const answers = document.querySelectorAll('.incorrectAnswer');
+    const respostaCorreta = document.querySelector('.respostaCorreta');
+
+    respostaCorreta.classList.remove('correct');
+    answers.forEach((resposta) => {
+      resposta.classList.remove('incorrect');
+    });
     const { counter } = this.state;
     console.log(counter);
     const questionsNumber = 4;
@@ -154,7 +173,13 @@ class Game extends React.Component {
   }
 
   render() {
-    const { resultsQuestions, counter, correctAnswer, allQuestions } = this.state;
+    const {
+      resultsQuestions,
+      counter,
+      correctAnswer,
+      allQuestions,
+      isDisabled,
+      isHidden } = this.state;
     const { timer } = this.props;
     return (
       <section>
@@ -179,9 +204,13 @@ class Game extends React.Component {
           )}
         <button
           type="button"
+          name="next"
+          data-testid="btn-next"
+          disabled={ isDisabled }
+          hidden={ isHidden }
           onClick={ () => { this.clickNextQuestion(); } }
         >
-          NEXT QUESTION
+          Next
         </button>
         <Timer />
         { timer === 0 ? this.disableButtons() : null }
