@@ -5,7 +5,7 @@ import timerReducer from './timerReducer';
 
 const rootReducer = combineReducers(
   {
-    players: playerReducer, token: tokenReducer, timer: timerReducer,
+    player: playerReducer, token: tokenReducer, timer: timerReducer,
   },
 );
 
