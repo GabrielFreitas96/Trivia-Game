@@ -19,8 +19,10 @@ class Timer extends Component {
   componentDidUpdate() {
     const { time } = this.state;
     const { dispatch } = this.props;
-    if (time === 0) {
+    if (time >= 0) {
       dispatch(TimerAction(time));
+    } else {
+      return null;
     }
   }
 
