@@ -4,6 +4,8 @@ import PropTypes from 'prop-types';
 import { getQuestions } from '../Service/service';
 import Header from '../components/Header';
 import './Game.css';
+import Timer from '../components/Timer';
+import { TimerAction } from '../Redux/Actions/index';
 
 class Game extends React.Component {
   state = {
@@ -11,6 +13,7 @@ class Game extends React.Component {
     counter: 0,
     allQuestions: [],
     correctAnswer: '',
+    disabledBtnQuestions: false,
   }
 
   async componentDidMount() {
@@ -18,6 +21,7 @@ class Game extends React.Component {
     console.log(token);
     const ApiResult = await getQuestions(token);
     const { counter } = this.state;
+    console.log(ApiResult.results[counter].correct_answer);
     this.setState({
       resultsQuestions: ApiResult.results,
       correctAnswer: ApiResult.results[counter].correct_answer,
@@ -39,6 +43,7 @@ class Game extends React.Component {
     const randomQuestions = this.arrayRandomOrder(arrayAllQuestions);
     // console.log('random Questions', randomQuestions);
     let counterIndex = 0 - 1;
+    const { disabledBtnQuestions } = this.state;
     return randomQuestions.map((element) => {
       if (element === correctAnswer) {
         // console.log('Entrou no IF');
@@ -49,6 +54,7 @@ class Game extends React.Component {
             className="respostaCorreta"
             data-testid="correct-answer"
             onClick={ (event) => { this.clickAnswer(element, event); } }
+            disabled={ disabledBtnQuestions }
           >
             {element}
           </button>);
@@ -64,6 +70,7 @@ class Game extends React.Component {
           data-testid={ `wrong-answer-${counterIndex}` }
           onClick={ (event) => { this.clickAnswer(element, event); } }
           key={ counterIndex }
+          disabled={ disabledBtnQuestions }
         >
           {element}
         </button>);
@@ -97,8 +104,23 @@ class Game extends React.Component {
     ));
   };
 
+  disableButtons = () => {
+    console.log('entrei');
+    this.setState({ disabledBtnQuestions: true });
+    const { dispatch } = this.props;
+    const number = 30;
+    dispatch(TimerAction(number));
+    // this.setState((prevState) => (
+    //   { counter: prevState.counter + 1,
+    //   disabledBtnQuestions: !prevState.disabledBtnQuestions, }
+    // ));
+  }
+
   render() {
-    const { resultsQuestions, counter, correctAnswer, allQuestions } = this.state;
+    const { resultsQuestions,
+      counter, correctAnswer, allQuestions, disabledBtnQuestions } = this.state;
+    const { timer } = this.props;
+    console.log(disabledBtnQuestions, timer);
     return (
       <section>
         <Header />
@@ -126,6 +148,8 @@ class Game extends React.Component {
         >
           NEXT QUESTION
         </button>
+        <Timer />
+        { timer === 0 ? this.disableButtons() : null }
       </section>
     );
   }
@@ -133,9 +157,12 @@ class Game extends React.Component {
 
 const mapStateToProps = (globalState) => ({
   token: globalState.token,
+  timer: globalState.timer,
 });
 
 export default connect(mapStateToProps)(Game);
 Game.propTypes = {
   token: PropTypes.string.isRequired,
+  timer: PropTypes.number.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
