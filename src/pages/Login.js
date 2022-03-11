@@ -38,7 +38,7 @@ class Login extends React.Component {
 
   handleClick = async () => {
     const tokenApi = await getToken();
-    console.log(tokenApi);
+    // console.log(tokenApi);
     const { dispatch, history } = this.props;
     const { name, email } = this.state;
     dispatch(PlayerAction({ name, email }));
