@@ -40,7 +40,6 @@ class Game extends React.Component {
     const soma = score;
     saveLocalStorage('score', soma);
   }
-
   // https://pt.stackoverflow.com/questions/406037/mostrar-elementos-de-um-array-em-ordem-aleat%C3%B3ria usado para fazer a função ArrayRandomOrder
 
   arrayRandomOrder = (array) => {
@@ -84,10 +83,14 @@ class Game extends React.Component {
   };
 
   refreshButton = () => {
-    this.setState({
-      isDisabled: false,
-      isHidden: false,
-    });
+    const { counter } = this.state;
+    const counterNumerMaximo = 4;
+    if (counter <= counterNumerMaximo) {
+      this.setState({
+        isDisabled: false,
+        isHidden: false,
+      });
+    }
   }
 
   clickAnswer = (answer, event) => {
@@ -138,11 +141,11 @@ class Game extends React.Component {
   }
 
   clickNextQuestion = () => {
-    this.setState((prevState) => ({
-      counter: prevState.counter + 1,
-      isDisabled: true,
-    }
-    ));
+    // this.setState((prevState) => ({
+    //   counter: prevState.counter + 1,
+    //   isDisabled: true,
+    // }
+    // ));
 
     const answers = document.querySelectorAll('.incorrectAnswer');
     const respostaCorreta = document.querySelector('.respostaCorreta');
@@ -158,6 +161,14 @@ class Game extends React.Component {
       this.setState((prevState) => (
         { counter: prevState.counter + 1 }
       ), this.updateQuestions);
+    }
+    this.setState({
+      isDisabled: true,
+      isHidden: true,
+    });
+    if (counter === questionsNumber) {
+      const { history } = this.props;
+      history.push('/feedback');
     }
   };
 
@@ -231,4 +242,7 @@ Game.propTypes = {
   timer: PropTypes.number.isRequired,
   dispatch: PropTypes.func.isRequired,
   score: PropTypes.number.isRequired,
+  history: PropTypes.shape({
+    push: PropTypes.func.isRequired,
+  }).isRequired,
 };
