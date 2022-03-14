@@ -1,8 +1,8 @@
-import { ADD_SCORE, PLAYER_INFO } from '../Actions/ActionConst';
+import { ADD_SCORE, PLAYER_INFO, RIGHT_QUESTIONS } from '../Actions/ActionConst';
 
 const INITIAL_STATE = {
   name: '',
-  assertions: '',
+  assertions: 0,
   score: 0,
   gravatarEmail: '',
   gravatarURL: '',
@@ -21,6 +21,11 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       score: action.payload.score + state.score,
+    };
+  case RIGHT_QUESTIONS:
+    return {
+      ...state,
+      assertions: state.assertions + 1,
     };
   default:
     return state;

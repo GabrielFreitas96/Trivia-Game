@@ -5,7 +5,7 @@ import { getQuestions, saveLocalStorage } from '../Service/service';
 import Header from '../components/Header';
 import './Game.css';
 import Timer from '../components/Timer';
-import { ScoreAction, TimerAction } from '../Redux/Actions/index';
+import { ScoreAction, TimerAction, RightQuestionsAction } from '../Redux/Actions/index';
 
 class Game extends React.Component {
   state = {
@@ -99,11 +99,10 @@ class Game extends React.Component {
     const answerClick = event.target;
     const answers = document.querySelectorAll('.incorrectAnswer');
     const respostaCorreta = document.querySelector('.respostaCorreta');
-    console.log(respostaCorreta);
-
     let score = 0;
     const { timer, dispatch } = this.props;
     if (answer === correctAnswer) {
+      dispatch(RightQuestionsAction());
       answerClick.classList.add('correct');
       answers.forEach((resposta) => {
         resposta.classList.add('incorrect');
@@ -123,7 +122,6 @@ class Game extends React.Component {
       score = scoreNumber + (timer * difficultPoints);
       dispatch(ScoreAction(score));
     } else {
-      console.log('oi:', respostaCorreta);
       respostaCorreta.classList.add('correct');
       answers.forEach((resposta) => {
         resposta.classList.add('incorrect');
@@ -150,7 +148,6 @@ class Game extends React.Component {
       resposta.classList.remove('incorrect');
     });
     const { counter } = this.state;
-    console.log(counter);
     const questionsNumber = 4;
     if (counter < questionsNumber) {
       this.setState((prevState) => (

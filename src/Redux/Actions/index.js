@@ -1,4 +1,5 @@
-import { PLAYER_INFO, TOKEN_INFO, TIMER, ADD_SCORE } from './ActionConst';
+import { PLAYER_INFO, TOKEN_INFO, TIMER,
+  ADD_SCORE, RIGHT_QUESTIONS } from './ActionConst';
 
 export const PlayerAction = (playerObject) => ({
   type: PLAYER_INFO,
@@ -22,4 +23,8 @@ export const ScoreAction = (score) => ({
   payload: {
     score,
   },
+});
+
+export const RightQuestionsAction = () => ({
+  type: RIGHT_QUESTIONS,
 });
