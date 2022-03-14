@@ -15,7 +15,11 @@ class Header extends Component {
           src={ `https://www.gravatar.com/avatar/${MD5(gravatarEmail)}` }
           alt="GravatarImg"
         />
-        <p data-testid="header-score">{ `score: ${score}` }</p>
+        <p
+          data-testid="header-score"
+        >
+          {score}
+        </p>
       </header>
     );
   }
