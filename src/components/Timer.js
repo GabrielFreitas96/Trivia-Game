@@ -33,7 +33,6 @@ class Timer extends Component {
 
   myInterval = () => {
     const { stopTimer } = this.props;
-    console.log(stopTimer);
     if (stopTimer) {
       clearInterval(this.Timer);
     }
