@@ -7,7 +7,6 @@ import PropTypes from 'prop-types';
 class Header extends Component {
   render() {
     const { name, gravatarEmail, score } = this.props;
-    console.log(typeof(score));
     return (
       <header>
         <h4 data-testid="header-player-name">{ name }</h4>
@@ -16,7 +15,11 @@ class Header extends Component {
           src={ `https://www.gravatar.com/avatar/${MD5(gravatarEmail)}` }
           alt="GravatarImg"
         />
-        <p data-testid="header-score"> {score} </p>
+        <p
+          data-testid="header-score"
+        >
+          {score}
+        </p>
       </header>
     );
   }
