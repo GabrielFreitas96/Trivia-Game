@@ -4,16 +4,20 @@ import PropTypes from 'prop-types';
 import { TimerAction } from '../Redux/Actions/index';
 
 class Timer extends Component {
-  state = {
-    time: 30,
+  constructor() {
+    super();
+    this.Timer = () => {};
+    this.state = {
+      time: 30,
+    };
   }
 
   componentDidMount() {
     const interval = 1000;
-    const myInterval = setInterval(
+    this.Timer = setInterval(
       () => this.setState((prevState) => ({ time: prevState.time - 1 })), interval,
     );
-    return myInterval;
+    return this.Timer;
   }
 
   componentDidUpdate() {
@@ -23,6 +27,15 @@ class Timer extends Component {
       dispatch(TimerAction(time));
     } else {
       return null;
+    }
+    this.myInterval();
+  }
+
+  myInterval = () => {
+    const { stopTimer } = this.props;
+    console.log(stopTimer);
+    if (stopTimer) {
+      clearInterval(this.Timer);
     }
   }
 
@@ -43,6 +56,7 @@ class Timer extends Component {
 
 Timer.propTypes = {
   dispatch: PropTypes.func.isRequired,
+  stopTimer: PropTypes.bool.isRequired,
 };
 
 export default connect()(Timer);

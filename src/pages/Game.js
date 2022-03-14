@@ -17,6 +17,7 @@ class Game extends React.Component {
     isHidden: true,
     difficulty: '',
     disabledBtnQuestions: false,
+    stopTimer: false,
   }
 
   async componentDidMount() {
@@ -129,6 +130,7 @@ class Game extends React.Component {
       });
     }
     this.refreshButton();
+    this.setState({ stopTimer: true });
   };
 
   updateQuestions = () => {
@@ -141,15 +143,8 @@ class Game extends React.Component {
   }
 
   clickNextQuestion = () => {
-    // this.setState((prevState) => ({
-    //   counter: prevState.counter + 1,
-    //   isDisabled: true,
-    // }
-    // ));
-
     const answers = document.querySelectorAll('.incorrectAnswer');
     const respostaCorreta = document.querySelector('.respostaCorreta');
-
     respostaCorreta.classList.remove('correct');
     answers.forEach((resposta) => {
       resposta.classList.remove('incorrect');
@@ -170,6 +165,7 @@ class Game extends React.Component {
       const { history } = this.props;
       history.push('/feedback');
     }
+    this.setState({ disabledBtnQuestions: false, stopTimer: false });
   };
 
   disableButtons = () => {
@@ -177,15 +173,17 @@ class Game extends React.Component {
     const { dispatch } = this.props;
     const number = 30;
     dispatch(TimerAction(number));
-    // this.setState((prevState) => (
-    //   { counter: prevState.counter + 1,
-    //   disabledBtnQuestions: !prevState.disabledBtnQuestions, }
-    // ));
+    this.setState({
+      isDisabled: false,
+      isHidden: false,
+      stopTimer: false,
+    });
   }
 
   render() {
     const {
       resultsQuestions,
+      stopTimer,
       counter,
       correctAnswer,
       allQuestions,
@@ -223,7 +221,7 @@ class Game extends React.Component {
         >
           Next
         </button>
-        <Timer />
+        <Timer key={ counter } stopTimer={ stopTimer } />
         { timer === 0 ? this.disableButtons() : null }
       </section>
     );
@@ -237,6 +235,7 @@ const mapStateToProps = (globalState) => ({
 });
 
 export default connect(mapStateToProps)(Game);
+
 Game.propTypes = {
   token: PropTypes.string.isRequired,
   timer: PropTypes.number.isRequired,
