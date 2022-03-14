@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { ResetAction } from '../Redux/Actions/index';
 
 class Ranking extends Component {
   state = {
@@ -10,6 +13,8 @@ class Ranking extends Component {
     const players = JSON.parse(localStorage.getItem('ranking'));
     players.sort((a, b) => b.score - a.score);
     this.setState({ playersArray: players });
+    const { dispatch } = this.props;
+    dispatch(ResetAction(0));
   }
 
   render() {
@@ -44,4 +49,8 @@ class Ranking extends Component {
   }
 }
 
-export default Ranking;
+Ranking.propTypes = {
+  dispatch: PropTypes.func.isRequired,
+};
+
+export default connect()(Ranking);

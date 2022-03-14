@@ -1,4 +1,5 @@
-import { ADD_SCORE, PLAYER_INFO, RIGHT_QUESTIONS } from '../Actions/ActionConst';
+import { ADD_SCORE, PLAYER_INFO, RIGHT_QUESTIONS,
+  RESET_SCORE } from '../Actions/ActionConst';
 
 const INITIAL_STATE = {
   name: '',
@@ -21,6 +22,11 @@ const playerReducer = (state = INITIAL_STATE, action) => {
     return {
       ...state,
       score: action.payload.score + state.score,
+    };
+  case RESET_SCORE:
+    return {
+      ...state,
+      score: 0,
     };
   case RIGHT_QUESTIONS:
     return {

@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 import MD5 from 'crypto-js/md5';
 import { saveLocalStorageRanking } from '../Service/service';
 import Header from '../components/Header';
+import { ResetAction } from '../Redux/Actions/index';
 
 class Feedback extends React.Component {
   componentDidMount() {
@@ -27,6 +28,11 @@ class Feedback extends React.Component {
     }
   };
 
+  handleClick = () => {
+    const { dispatch } = this.props;
+    dispatch(ResetAction(0));
+  }
+
   render() {
     const { rightQuestions, score } = this.props;
     return (
@@ -45,6 +51,7 @@ class Feedback extends React.Component {
             type="button"
             name="button-play-again"
             data-testid="btn-play-again"
+            onClick={ this.handleClick }
           >
             Play again
           </button>
@@ -79,4 +86,5 @@ Feedback.propTypes = {
   score: PropTypes.number.isRequired,
   name: PropTypes.string.isRequired,
   email: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired,
 };
