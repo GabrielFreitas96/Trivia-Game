@@ -2,11 +2,21 @@ import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
-import { saveLocalStorageRanking } from '../Service/service'
-import Header from '../components/Header';
 import MD5 from 'crypto-js/md5';
+import { saveLocalStorageRanking } from '../Service/service';
+import Header from '../components/Header';
 
 class Feedback extends React.Component {
+  componentDidMount() {
+    const { name, score, email } = this.props;
+    const picture = `https://www.gravatar.com/avatar/${MD5(email)}`;
+    const object = { name,
+      score,
+      picture,
+    };
+    saveLocalStorageRanking(object);
+  }
+
   messageNumberOfQuestions = (correctAnswers) => {
     const couldBeBetter = 3;
     if (correctAnswers < couldBeBetter) {
@@ -16,16 +26,6 @@ class Feedback extends React.Component {
       return <p data-testid="feedback-text">Well Done!</p>;
     }
   };
-
-  componentDidMount() {
-    const { name, score, email} = this.props;
-    const picture = `https://www.gravatar.com/avatar/${MD5(email)}`
-    const object = { name,
-      score,
-      picture,
-    };
-    saveLocalStorageRanking(object);
-  }
 
   render() {
     const { rightQuestions, score } = this.props;
@@ -77,4 +77,6 @@ export default connect(mapStateToProps)(Feedback);
 Feedback.propTypes = {
   rightQuestions: PropTypes.number.isRequired,
   score: PropTypes.number.isRequired,
+  name: PropTypes.string.isRequired,
+  email: PropTypes.string.isRequired,
 };

@@ -38,7 +38,7 @@ export const saveLocalStorageRanking = (object) => {
   const prevsArray = JSON.parse(localStorage.getItem('ranking'));
   if (!prevsArray) {
     localStorage.setItem('ranking', JSON.stringify([object]));
-  } else { 
-  localStorage.setItem('ranking', JSON.stringify([...prevsArray,object])); 
+  } else {
+    localStorage.setItem('ranking', JSON.stringify([...prevsArray, object]));
   }
 };
