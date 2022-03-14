@@ -15,7 +15,7 @@ class Feedback extends React.Component {
         >
           <button
             type="button"
-            name="button"
+            name="button-play-again"
             data-testid="btn-play-again"
           >
             Play again
