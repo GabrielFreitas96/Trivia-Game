@@ -1,5 +1,5 @@
 import { PLAYER_INFO, TOKEN_INFO, TIMER,
-  ADD_SCORE, RIGHT_QUESTIONS } from './ActionConst';
+  ADD_SCORE, RIGHT_QUESTIONS, RESET_SCORE } from './ActionConst';
 
 export const PlayerAction = (playerObject) => ({
   type: PLAYER_INFO,
@@ -27,4 +27,8 @@ export const ScoreAction = (score) => ({
 
 export const RightQuestionsAction = () => ({
   type: RIGHT_QUESTIONS,
+});
+
+export const ResetAction = () => ({
+  type: RESET_SCORE,
 });

@@ -33,3 +33,12 @@ export const getGravatar = async (email) => {
 export const saveLocalStorage = (propriedade, string) => {
   localStorage.setItem(propriedade, JSON.stringify(string));
 };
+
+export const saveLocalStorageRanking = (object) => {
+  const prevsArray = JSON.parse(localStorage.getItem('ranking'));
+  if (!prevsArray) {
+    localStorage.setItem('ranking', JSON.stringify([object]));
+  } else {
+    localStorage.setItem('ranking', JSON.stringify([...prevsArray, object]));
+  }
+};
