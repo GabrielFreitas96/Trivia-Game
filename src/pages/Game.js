@@ -107,9 +107,7 @@ class Game extends React.Component {
     if (answer === correctAnswer) {
       dispatch(RightQuestionsAction());
       answerClick.classList.add('correct');
-      answers.forEach((resposta) => {
-        resposta.classList.add('incorrect');
-      });
+      answers.forEach((resposta) => { resposta.classList.add('incorrect'); });
       let difficultPoints = 0;
       const hardNumber = 3;
       const mediumNumber = 2;
@@ -126,12 +124,10 @@ class Game extends React.Component {
       dispatch(ScoreAction(score));
     } else {
       respostaCorreta.classList.add('correct');
-      answers.forEach((resposta) => {
-        resposta.classList.add('incorrect');
-      });
+      answers.forEach((resposta) => { resposta.classList.add('incorrect'); });
     }
     this.refreshButton();
-    this.setState({ stopTimer: true });
+    this.setState({ disabledBtnQuestions: true, stopTimer: true });
   };
 
   updateQuestions = () => {
@@ -157,10 +153,7 @@ class Game extends React.Component {
         { counter: prevState.counter + 1 }
       ), this.updateQuestions);
     }
-    this.setState({
-      isDisabled: true,
-      isHidden: true,
-    });
+    this.setState({ isDisabled: true, isHidden: true });
     if (counter === questionsNumber) {
       const { history } = this.props;
       history.push('/feedback');
@@ -173,11 +166,7 @@ class Game extends React.Component {
     const { dispatch } = this.props;
     const number = 30;
     dispatch(TimerAction(number));
-    this.setState({
-      isDisabled: false,
-      isHidden: false,
-      stopTimer: false,
-    });
+    this.setState({ isDisabled: false, isHidden: false, stopTimer: false });
   }
 
   render() {
@@ -201,11 +190,19 @@ class Game extends React.Component {
                 dangerouslySetInnerHTML={ { __html:
                   sanitizeHtml(resultsQuestions[counter].category) } }
               />
-              <h3
-                data-testid="question-text"
-                dangerouslySetInnerHTML={ { __html:
-                  sanitizeHtml(resultsQuestions[counter].question) } }
-              />
+              { correctAnswer === 'Dirk the Daring' ? (
+                <h3
+                  data-testid="question-text"
+                >
+                  {resultsQuestions[counter].question}
+                </h3>)
+                : (
+                  <h3
+                    data-testid="question-text"
+                    dangerouslySetInnerHTML={ { __html:
+                    sanitizeHtml(resultsQuestions[counter].question) } }
+                  />
+                )}
               <div data-testid="answer-options">
                 { this.createQuestions(allQuestions, correctAnswer) }
               </div>
@@ -227,15 +224,12 @@ class Game extends React.Component {
     );
   }
 }
-
 const mapStateToProps = (globalState) => ({
   token: globalState.token,
   timer: globalState.timer,
   score: globalState.player.score,
 });
-
 export default connect(mapStateToProps)(Game);
-
 Game.propTypes = {
   token: PropTypes.string.isRequired,
   timer: PropTypes.number.isRequired,
