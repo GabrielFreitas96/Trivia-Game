@@ -15,7 +15,7 @@ export const getQuestions = async (token) => {
   const response = await data.json();
   if (response.results.length === 0) {
     const tokenTwo = await getToken();
-    const urlRequestTwo = `https://opentdb.com/api.php?amount=5&token=${tokenTwo}`;
+    const urlRequestTwo = `https://opentdb.com/api.php?amount=5&token=${tokenTwo}&encode=base64`;
     const dataTwo = await fetch(urlRequestTwo);
     const responseTwo = await dataTwo.json();
     return responseTwo;

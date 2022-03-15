@@ -1,6 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import sanitizeHtml from 'sanitize-html';
 import { getQuestions, saveLocalStorage } from '../Service/service';
 import Header from '../components/Header';
 import './Game.css';
@@ -63,8 +64,9 @@ class Game extends React.Component {
             data-testid="correct-answer"
             onClick={ (event) => { this.clickAnswer(element, event); } }
             disabled={ disabledBtnQuestions }
+            dangerouslySetInnerHTML={ { __html: sanitizeHtml(element) } }
           >
-            {element}
+            {}
           </button>);
       }
       counterIndex += 1;
@@ -77,8 +79,9 @@ class Game extends React.Component {
           onClick={ (event) => { this.clickAnswer(element, event); } }
           key={ counterIndex }
           disabled={ disabledBtnQuestions }
+          dangerouslySetInnerHTML={ { __html: sanitizeHtml(element) } }
         >
-          {element}
+          {}
         </button>);
     });
   };
@@ -195,14 +198,14 @@ class Game extends React.Component {
             <div>
               <h2
                 data-testid="question-category"
-              >
-                { resultsQuestions[counter].category }
-              </h2>
+                dangerouslySetInnerHTML={ { __html:
+                  sanitizeHtml(resultsQuestions[counter].category) } }
+              />
               <h3
                 data-testid="question-text"
-              >
-                { resultsQuestions[counter].question }
-              </h3>
+                dangerouslySetInnerHTML={ { __html:
+                  sanitizeHtml(resultsQuestions[counter].question) } }
+              />
               <div data-testid="answer-options">
                 { this.createQuestions(allQuestions, correctAnswer) }
               </div>
