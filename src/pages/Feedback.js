@@ -6,12 +6,14 @@ import MD5 from 'crypto-js/md5';
 import { saveLocalStorageRanking } from '../Service/service';
 import Header from '../components/Header';
 import { ResetAction } from '../Redux/Actions/index';
+import '../style/Feedback.css';
 
 class Feedback extends React.Component {
   componentDidMount() {
     const { name, score, email } = this.props;
     const picture = `https://www.gravatar.com/avatar/${MD5(email)}`;
-    const object = { name,
+    const object = {
+      name,
       score,
       picture,
     };
@@ -21,10 +23,10 @@ class Feedback extends React.Component {
   messageNumberOfQuestions = (correctAnswers) => {
     const couldBeBetter = 3;
     if (correctAnswers < couldBeBetter) {
-      return <p data-testid="feedback-text">Could be better...</p>;
+      return <h6 className="feedback-message" data-testid="feedback-text">Could be better...</h6>;
     }
     if (correctAnswers >= couldBeBetter) {
-      return <p data-testid="feedback-text">Well Done!</p>;
+      return <h6 className="feedback-message" data-testid="feedback-text">Well Done!</h6>;
     }
   };
 
@@ -36,38 +38,50 @@ class Feedback extends React.Component {
   render() {
     const { rightQuestions, score } = this.props;
     return (
-      <section>
-        <h1 data-testid="feedback-text">Página de Feedback</h1>
+      <>
         <Header />
-        <div>
-          <h3 data-testid="feedback-total-score">{ score }</h3>
-          <h4 data-testid="feedback-total-question">{ rightQuestions }</h4>
-          { this.messageNumberOfQuestions(rightQuestions) }
-        </div>
-        <Link
-          to="/"
-        >
-          <button
-            type="button"
-            name="button-play-again"
-            data-testid="btn-play-again"
-            onClick={ this.handleClick }
-          >
-            Play again
-          </button>
-        </Link>
-        <Link
-          to="/ranking"
-        >
-          <button
-            type="button"
-            name="button-play-again"
-            data-testid="btn-ranking"
-          >
-            Ranking
-          </button>
-        </Link>
-      </section>
+        <section className="section-feedback">
+          <h1 className="text-feedback-page" data-testid="feedback-text">Your Score!</h1>
+          <div>
+            <h3
+              className="feedback-score"
+              data-testid="feedback-total-score"
+            >
+              { score }
+            </h3>
+            <div className="assertions-div">
+              <h4 className="text-number-acertos">Right answers: </h4>
+              <h4 data-testid="feedback-total-question">{ rightQuestions }</h4>
+            </div>
+            { this.messageNumberOfQuestions(rightQuestions) }
+          </div>
+          <div className="div-buttons-feedback">
+            <Link
+              to="/"
+            >
+              <button
+                type="button"
+                name="button-play-again"
+                data-testid="btn-play-again"
+                onClick={ this.handleClick }
+              >
+                Play again
+              </button>
+            </Link>
+            <Link
+              to="/ranking"
+            >
+              <button
+                type="button"
+                name="button-play-again"
+                data-testid="btn-ranking"
+              >
+                Ranking
+              </button>
+            </Link>
+          </div>
+        </section>
+      </>
     );
   }
 }

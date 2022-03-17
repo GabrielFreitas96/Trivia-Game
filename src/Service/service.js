@@ -9,13 +9,18 @@ export const getToken = async () => {
   return response.token;
 };
 
-export const getQuestions = async (token) => {
-  const urlRequest = `https://opentdb.com/api.php?amount=5&token=${token}`;
+export const getQuestions = async (token,category,difficulty,type) => {
+  console.log(token)
+  const urlRequest = `https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&type=${type}&token=${token}`;
   const data = await fetch(urlRequest);
   const response = await data.json();
+  console.log(response);
   if (response.results.length === 0) {
+    console.log('entrou')
     const tokenTwo = await getToken();
-    const urlRequestTwo = `https://opentdb.com/api.php?amount=5&token=${tokenTwo}`;
+    console.log(tokenTwo);
+    const urlRequestTwo = `https://opentdb.com/api.php?amount=5&category=${category}&difficulty=${difficulty}&type=${type}&token=${tokenTwo}`;
+    console.log(urlRequestTwo);
     const dataTwo = await fetch(urlRequestTwo);
     const responseTwo = await dataTwo.json();
     return responseTwo;
@@ -41,4 +46,11 @@ export const saveLocalStorageRanking = (object) => {
   } else {
     localStorage.setItem('ranking', JSON.stringify([...prevsArray, object]));
   }
+};
+
+export const getCategorys= async () => {
+  const urlCategorys = 'https://opentdb.com/api_category.php';
+  const data = await fetch(urlCategorys);
+  const response = await data.json();
+  return response;
 };

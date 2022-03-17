@@ -13,10 +13,12 @@ export default class App extends React.Component {
       <div className="App">
         <Switch>
           <Route exact path="/" component={ Login } />
-          <Route path="/game" component={ Game } />
-          <Route path="/settings" component={ Settings } />
-          <Route path="/feedback" component={ Feedback } />
-          <Route path="/ranking" component={ Ranking } />
+          <div className="light-blue">
+            <Route path="/game" component={ Game } />
+            <Route path="/settings" component={ Settings } />
+            <Route path="/feedback" component={ Feedback } />
+            <Route path="/ranking" component={ Ranking } />
+          </div>
         </Switch>
       </div>
     );

@@ -1,0 +1,51 @@
+.ranking-div {
+  background-color: deepskyblue;
+  color: white;
+  height: 100%;
+}
+
+.ranking-div-allplayers {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+}
+
+.player-div {
+  display: flex;
+  flex-direction: column;
+}
+
+.ranking-h1 {
+  margin-top: 0;
+  padding-top: 20px;
+}
+
+.ranking-name-img {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+.ranking-h4 {
+  margin-right: 40px;
+}
+
+.ranking-img {
+  border-radius: 50%;
+  height: 40px;
+}
+
+.ranking-score {
+  color: green;
+}
+
+.next-btn {
+  border: none;
+  border-radius: 30px;
+  transition: all 0.5s;
+}
+
+.next-btn:hover {
+  box-shadow: 0 0px 20px yellow;
+  font-size: 15px;
+}

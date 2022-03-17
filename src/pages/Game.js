@@ -22,8 +22,9 @@ class Game extends React.Component {
   }
 
   async componentDidMount() {
-    const { token } = this.props;
-    const ApiResult = await getQuestions(token);
+    const { token, category, type, difficulty } = this.props;
+    const ApiResult = await getQuestions(token, category, difficulty, type );
+    console.log(ApiResult);
     const { counter } = this.state;
     this.setState({
       resultsQuestions: ApiResult.results,
@@ -60,7 +61,7 @@ class Game extends React.Component {
         return (
           <button
             type="button"
-            className="respostaCorreta"
+            className="respostaCorreta button-answer"
             data-testid="correct-answer"
             onClick={ (event) => { this.clickAnswer(element, event); } }
             disabled={ disabledBtnQuestions }
@@ -74,7 +75,7 @@ class Game extends React.Component {
       return (
         <button
           type="button"
-          className="incorrectAnswer"
+          className="incorrectAnswer button-answer"
           data-testid={ `wrong-answer-${counterIndex}` }
           onClick={ (event) => { this.clickAnswer(element, event); } }
           key={ counterIndex }
@@ -105,6 +106,7 @@ class Game extends React.Component {
     let score = 0;
     const { timer, dispatch } = this.props;
     if (answer === correctAnswer) {
+      console.log(respostaCorreta.classList)
       dispatch(RightQuestionsAction());
       answerClick.classList.add('correct');
       answers.forEach((resposta) => { resposta.classList.add('incorrect'); });
@@ -123,6 +125,7 @@ class Game extends React.Component {
       score = scoreNumber + (timer * difficultPoints);
       dispatch(ScoreAction(score));
     } else {
+      console.log(respostaCorreta.classList)
       respostaCorreta.classList.add('correct');
       answers.forEach((resposta) => { resposta.classList.add('incorrect'); });
     }
@@ -180,12 +183,13 @@ class Game extends React.Component {
       isHidden } = this.state;
     const { timer } = this.props;
     return (
-      <section>
+      <section className='section-game'>
         <Header />
         { resultsQuestions.length === 0 ? null
           : (
-            <div>
+            <div className="answers-div">
               <h2
+                className="question-category"
                 data-testid="question-category"
                 dangerouslySetInnerHTML={ { __html:
                   sanitizeHtml(resultsQuestions[counter].category) } }
@@ -203,12 +207,13 @@ class Game extends React.Component {
                     sanitizeHtml(resultsQuestions[counter].question) } }
                   />
                 )}
-              <div data-testid="answer-options">
+              <div className="answer-options" data-testid="answer-options">
                 { this.createQuestions(allQuestions, correctAnswer) }
               </div>
             </div>
           )}
         <button
+          className="next-btn"
           type="button"
           name="next"
           data-testid="btn-next"
@@ -228,8 +233,13 @@ const mapStateToProps = (globalState) => ({
   token: globalState.token,
   timer: globalState.timer,
   score: globalState.player.score,
-});
+  category: globalState.setting.category,
+  difficulty: globalState.setting.difficulty,
+  type: globalState.setting.type,
+})
+
 export default connect(mapStateToProps)(Game);
+
 Game.propTypes = {
   token: PropTypes.string.isRequired,
   timer: PropTypes.number.isRequired,

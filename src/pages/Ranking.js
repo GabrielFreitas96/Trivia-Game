@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { ResetAction } from '../Redux/Actions/index';
+import '../style/Ranking.css';
 
 class Ranking extends Component {
   state = {
@@ -20,16 +21,18 @@ class Ranking extends Component {
   render() {
     const { playersArray } = this.state;
     return (
-      <div>
-        <h1 data-testid="ranking-title">Ranking</h1>
-        <div>
+      <div className="ranking-div">
+        <h1 className="ranking-h1" data-testid="ranking-title">Ranking</h1>
+        <div className="ranking-div-allplayers">
           { playersArray.length === 0 ? null
             : (
               playersArray.map((item, index) => (
-                <div key={ index }>
-                  <h4 data-testid={ `player-name-${index}` }>{ item.name }</h4>
-                  <img src={ item.picture } alt="gravatarImg" />
-                  <h4 data-testid={ `player-score-${index}` }>{ item.score }</h4>
+                <div className="player-div" key={ index }>
+                  <div className="ranking-name-img">
+                    <h4 className="ranking-h4" data-testid={ `player-name-${index}` }>{ item.name }</h4>
+                    <img className="ranking-img" src={ item.picture } alt="gravatarImg" />
+                  </div>
+                  <h4 classname='ranking-score' data-testid={ `player-score-${index}` }>{ item.score }</h4>
                 </div>
               )))}
         </div>
@@ -37,11 +40,12 @@ class Ranking extends Component {
           to="/"
         >
           <button
+            className='next-btn'
             type="button"
             name="button-play-again"
             data-testid="btn-go-home"
           >
-            Home
+            Play Again!
           </button>
         </Link>
       </div>

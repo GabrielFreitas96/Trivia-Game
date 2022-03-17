@@ -1,5 +1,6 @@
 import { PLAYER_INFO, TOKEN_INFO, TIMER,
-  ADD_SCORE, RIGHT_QUESTIONS, RESET_SCORE } from './ActionConst';
+  ADD_SCORE, RIGHT_QUESTIONS, RESET_SCORE,
+  ADD_CATEGORY, ADD_DIFFICULTY, ADD_TYPE } from './ActionConst';
 
 export const PlayerAction = (playerObject) => ({
   type: PLAYER_INFO,
@@ -31,4 +32,19 @@ export const RightQuestionsAction = () => ({
 
 export const ResetAction = () => ({
   type: RESET_SCORE,
+});
+
+export const CategoryAction = (id) => ({
+  type: ADD_CATEGORY,
+  payload: id, 
+});
+
+export const DifficultyAction = (string) => ({
+  type: ADD_DIFFICULTY,
+  payload: string, 
+});
+
+export const TypeAction = (string) => ({
+  type: ADD_TYPE,
+  payload: string, 
 });

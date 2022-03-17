@@ -6,6 +6,7 @@ import logo from '../trivia.png';
 import '../App.css';
 import { PlayerAction, TokenAction } from '../Redux/Actions';
 import { getToken, saveLocalStorage } from '../Service/service';
+import '../style/Login.css';
 
 class Login extends React.Component {
   state = {
@@ -38,7 +39,6 @@ class Login extends React.Component {
 
   handleClick = async () => {
     const tokenApi = await getToken();
-    // console.log(tokenApi);
     const { dispatch, history } = this.props;
     const { name, email } = this.state;
     dispatch(PlayerAction({ name, email }));
@@ -47,13 +47,24 @@ class Login extends React.Component {
     history.push('/game');
   }
 
+  handleClickSettings = async () => {
+    const tokenApi = await getToken();
+    const { dispatch, history } = this.props;
+    const { name, email } = this.state;
+    dispatch(PlayerAction({ name, email }));
+    dispatch(TokenAction(tokenApi));
+    saveLocalStorage('token', tokenApi);
+    history.push('/settings');
+  }
+
   render() {
     const { disabled, email, name } = this.state;
     return (
-      <>
+      <div className="login-container">
         <img src={ logo } className="App-logo" alt="logo" />
-        <form>
+        <form className="login-form">
           <input
+            className="form-inputs"
             value={ name }
             name="name"
             type="text"
@@ -62,6 +73,7 @@ class Login extends React.Component {
             onChange={ (event) => this.handleChange(event) }
           />
           <input
+            className="form-inputs"
             value={ email }
             name="email"
             type="email"
@@ -70,6 +82,7 @@ class Login extends React.Component {
             onChange={ (event) => this.handleChange(event) }
           />
           <button
+            className="form-play button-login"
             onClick={ this.handleClick }
             disabled={ disabled }
             type="button"
@@ -77,13 +90,9 @@ class Login extends React.Component {
           >
             Play
           </button>
-          <Link
-            to="/settings"
-          >
-            <button data-testid="btn-settings" type="button">Settings</button>
-          </Link>
+            <button onClick={ this.handleClickSettings } disabled={ disabled } className="settings-btn button-login form-settings" data-testid="btn-settings" type="button">Settings</button>
         </form>
-      </>
+      </div>
     );
   }
 }

@@ -1,0 +1,74 @@
+.login-container {
+  align-items: center;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  margin-top: 150px;
+}
+
+.login-form {
+  box-sizing: border-box;
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-evenly;
+  margin-top: 60px;
+}
+
+input, .button-login {
+  margin-top: 30px;
+}
+
+.form-inputs {
+  border-radius: 10px;
+  box-sizing: border-box;
+  padding: 5px 0 5px 20px;
+  width: 90%;
+}
+
+.button-login, a {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 25px;
+  font-weight: 900;
+  width: 80px;
+}
+
+a, .settings-btn {
+  cursor: pointer;
+  font-family: 'Bebas Neue', arial;
+}
+
+.form-play {
+  color: rgb(42, 42, 42);
+  font-family: 'Bebas Neue' , arial;
+}
+
+.form-play:enabled {
+  animation: changeColor 1s infinite;
+  cursor: pointer;
+}
+
+@keyframes changeColor {
+
+  from {
+    color: black;
+    font-size: 20px;
+  }
+
+  to {
+    color: rgb(7, 182, 7);
+    font-size: 30px;
+  }
+}
+
+.form-settings {
+  color: rgb(42, 42, 42);
+  font-family: 'Bebas Neue';
+  transition: all 0.5s;
+}
+
+.form-settings:enabled {
+  color: white;
+  cursor: pointer;
+}

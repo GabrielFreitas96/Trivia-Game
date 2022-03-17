@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { TimerAction } from '../Redux/Actions/index';
+import '../style/Timer.css';
 
 class Timer extends Component {
   constructor() {
@@ -43,11 +44,11 @@ class Timer extends Component {
     const numberTime = -1;
     return (
       <div>
-        { time <= numberTime ? <h4>0</h4>
+        { time <= numberTime ? <h5 className="timer-text">0</h5>
           : (
-            <h4>
+            <h5 className="timer-text">
               { time }
-            </h4>)}
+            </h5>)}
       </div>
     );
   }
